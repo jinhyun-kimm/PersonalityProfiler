@@ -10,16 +10,28 @@ export default function Results() {
   const { toast } = useToast();
 
   if (!match || !params?.personalityType) {
-    setLocation("/");
-    return null;
+    return (
+      <div className="text-center">
+        <p>잘못된 접근입니다.</p>
+        <Button onClick={() => setLocation("/")} className="mt-4">
+          홈으로 돌아가기
+        </Button>
+      </div>
+    );
   }
 
   const personalityType = params.personalityType as string;
   const typeData = personalityTypes[personalityType];
 
   if (!typeData) {
-    setLocation("/");
-    return null;
+    return (
+      <div className="text-center">
+        <p>해당 성격 유형을 찾을 수 없습니다.</p>
+        <Button onClick={() => setLocation("/")} className="mt-4">
+          홈으로 돌아가기
+        </Button>
+      </div>
+    );
   }
 
   const handleRestart = () => {
@@ -71,7 +83,15 @@ export default function Results() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="bg-blue-50 rounded-lg p-4">
+            <h5 className="font-semibold text-blue-600 mb-2">특성</h5>
+            <ul className="text-sm text-slate-700 space-y-1">
+              {typeData.characteristics.map((characteristic, index) => (
+                <li key={index}>• {characteristic}</li>
+              ))}
+            </ul>
+          </div>
           <div className="bg-primary/10 rounded-lg p-4">
             <h5 className="font-semibold text-primary mb-2">강점</h5>
             <ul className="text-sm text-slate-700 space-y-1">
@@ -81,10 +101,10 @@ export default function Results() {
             </ul>
           </div>
           <div className="bg-pink-500/10 rounded-lg p-4">
-            <h5 className="font-semibold text-pink-600 mb-2">개선점</h5>
+            <h5 className="font-semibold text-pink-600 mb-2">조언</h5>
             <ul className="text-sm text-slate-700 space-y-1">
-              {typeData.improvements.map((improvement, index) => (
-                <li key={index}>• {improvement}</li>
+              {typeData.advice.map((adviceItem, index) => (
+                <li key={index}>• {adviceItem}</li>
               ))}
             </ul>
           </div>

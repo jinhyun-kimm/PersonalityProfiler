@@ -10,9 +10,11 @@ import ProgressBar from "@/components/progress-bar";
 export default function Test() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const [step, setStep] = useState<'gender' | 'questions' | 'complete'>('gender');
+  const [gender, setGender] = useState<'남자' | '여자' | null>(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [scores, setScores] = useState({ E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 });
+  const [scores, setScores] = useState({ T: 0, E: 0 });
 
   useEffect(() => {
     // Check if we have questions data
@@ -47,9 +49,14 @@ export default function Test() {
     }
   };
 
+  const handleGenderSelect = (selectedGender: '남자' | '여자') => {
+    setGender(selectedGender);
+    setStep('questions');
+  };
+
   const calculateResults = () => {
     // Reset scores
-    const newScores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    const newScores = { T: 0, E: 0 };
 
     // Calculate scores based on answers
     testQuestions.forEach((question, qIndex) => {
@@ -62,15 +69,46 @@ export default function Test() {
       }
     });
 
-    // Determine personality type
+    // Determine personality type based on T (테토) vs E (에겐) scores and gender
     let personalityType = '';
-    personalityType += newScores.E > newScores.I ? 'E' : 'I';
-    personalityType += newScores.S > newScores.N ? 'S' : 'N';
-    personalityType += newScores.T > newScores.F ? 'T' : 'F';
-    personalityType += newScores.J > newScores.P ? 'J' : 'P';
+    if (newScores.T > newScores.E) {
+      personalityType = gender === '남자' ? '테토남' : '테토녀';
+    } else {
+      personalityType = gender === '남자' ? '에겐남' : '에겐녀';
+    }
 
     setLocation(`/results/${personalityType}`);
   };
+
+  // Gender selection step
+  if (step === 'gender') {
+    return (
+      <Card className="bg-white rounded-2xl shadow-lg p-8">
+        <CardContent className="pt-6 text-center">
+          <div className="w-20 h-20 bg-gradient-to-r from-primary to-pink-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+            <span className="text-white text-2xl font-bold">👤</span>
+          </div>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">성별을 선택해주세요</h2>
+          <p className="text-slate-600 mb-8">정확한 결과를 위해 성별을 선택해주세요.</p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => handleGenderSelect('남자')}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg"
+            >
+              남자 👨
+            </Button>
+            <Button
+              onClick={() => handleGenderSelect('여자')}
+              className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-full font-semibold text-lg"
+            >
+              여자 👩
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   const isCurrentQuestionAnswered = answers[currentQuestion] !== undefined;
   const isLastQuestion = currentQuestion === testQuestions.length - 1;

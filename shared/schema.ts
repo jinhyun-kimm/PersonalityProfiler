@@ -30,8 +30,9 @@ export const personalityTypeSchema = z.object({
   name: z.string(),
   emoji: z.string(),
   description: z.string(),
+  characteristics: z.array(z.string()),
   strengths: z.array(z.string()),
-  improvements: z.array(z.string())
+  advice: z.array(z.string())
 });
 
 export type Question = z.infer<typeof questionSchema>;

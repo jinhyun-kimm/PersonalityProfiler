@@ -12,10 +12,10 @@ export default function Home() {
           <div className="w-20 h-20 bg-gradient-to-r from-primary to-pink-500 rounded-full mx-auto mb-6 flex items-center justify-center">
             <span className="text-white text-2xl font-bold">🧠</span>
           </div>
-          <h2 className="text-3xl font-bold text-slate-800 mb-4">성격 유형 테스트</h2>
+          <h2 className="text-3xl font-bold text-slate-800 mb-4">테토-에겐 유형 테스트</h2>
           <p className="text-lg text-slate-600 mb-6 leading-relaxed">
             10개의 간단한 질문을 통해<br />
-            당신의 고유한 성격 유형을 알아보세요
+            당신이 테토형인지 에겐형인지 알아보세요
           </p>
           <div className="bg-slate-50 rounded-lg p-4 mb-6">
             <div className="flex items-center justify-center space-x-6 text-sm text-slate-600">

@@ -27,8 +27,8 @@ function App() {
           {/* Header */}
           <header className="bg-white shadow-sm border-b">
             <div className="max-w-4xl mx-auto px-4 py-4">
-              <h1 className="text-2xl font-bold text-slate-800">성격 유형 테스트</h1>
-              <p className="text-slate-600 mt-1">당신의 진짜 성격을 발견해보세요</p>
+              <h1 className="text-2xl font-bold text-slate-800">테토-에겐 유형 테스트</h1>
+              <p className="text-slate-600 mt-1">당신은 테토형인가요? 에겐형인가요?</p>
             </div>
           </header>
 
